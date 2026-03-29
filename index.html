@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SafeMark Pavement — Ottawa Pavement Marking Contractor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#080808;--ink2:#111111;--ink3:#181818;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  --gold:#c9a84c;--gold2:#e8c76a;--goldmid:rgba(201,168,76,.18);
+  --cream:#f5f0e8;--cream2:#ede8df;--ivory:#faf8f4;
+  --red:#c0392b;--dim:#4a4a4a;--mid:#7a7a7a;--light:#b0a99a;
+  --r:3px;--ease:.35s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);overflow-x:hidden}
+
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:9990}
+#hdr{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:72px;transition:background var(--ease),backdrop-filter var(--ease),border-bottom var(--ease)}
+#hdr.sc{background:rgba(8,8,8,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--border2)}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-mark{width:38px;height:38px;flex-shrink:0}
+.logo-mark svg{width:100%;height:100%}
+.logo-name{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.12em;color:var(--cream);line-height:1}
+.logo-name span{color:var(--gold)}
+.logo-sub{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);font-weight:400}
+nav{display:flex;align-items:center;gap:36px}
+nav a{font-size:.78rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color var(--ease);position:relative;padding-bottom:4px}
+nav a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform var(--ease);pointer-events:none}
+nav a:hover{color:var(--cream)}
+nav a:hover::after{transform:scaleX(1)}
+.hcta{border:1px solid rgba(201,168,76,.4)!important;color:var(--gold)!important;padding:9px 22px;border-radius:var(--r)}
+.hcta::after{display:none!important}
+.hcta:hover{background:var(--goldmid)!important;color:var(--gold2)!important}
+.burger{display:none;flex-direction:column;gap:6px;background:none;border:none;padding:4px}
+.burger span{display:block;width:24px;height:1.5px;background:var(--cream);border-radius:2px;transition:all .3s}
+.mob{display:none;flex-direction:column;position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--ink);z-index:199;padding:48px 40px;border-top:1px solid var(--border2)}
+.mob.open{display:flex}
+.mob a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.08em;color:var(--cream);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);transition:color .2s,padding-left .2s}
+.mob a:hover{color:var(--gold);padding-left:12px}
+.mob a:last-child{color:var(--gold);border-color:transparent;margin-top:24px;font-size:2rem}
+#hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink)}
+.h-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 30%,rgba(201,168,76,.06) 0%,transparent 65%),linear-gradient(170deg,#0e0e0e 0%,#080808 100%)}
+.h-road{position:absolute;inset:0;overflow:hidden}
+.h-road canvas{position:absolute;inset:0;width:100%;height:100%}
+.h-num{position:absolute;right:-2vw;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(18rem,30vw,38rem);line-height:1;color:rgba(201,168,76,.04);pointer-events:none;user-select:none;white-space:nowrap}
+.h-content{position:relative;z-index:2;padding:0 60px 10vh;width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:0}
+.h-eyebrow{display:inline-flex;align-items:center;gap:12px;margin-bottom:32px}
+.eyln{width:40px;height:1px;background:var(--gold)}
+.eytx{font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,11vw,13rem);line-height:.88;letter-spacing:.02em;color:var(--cream);margin-bottom:40px}
+h1 .acc{display:block;background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .sub{font-family:'DM Serif Display',serif;font-style:italic;font-size:.45em;display:block;color:var(--light);-webkit-text-fill-color:var(--light);letter-spacing:.02em;margin-bottom:4px}
+.h-desc{font-size:1rem;font-weight:300;line-height:1.75;color:var(--mid);max-width:420px;margin-bottom:44px}
+.h-acts{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-gold{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:17px 38px;border-radius:var(--r);text-decoration:none;border:none;transition:transform var(--ease),box-shadow var(--ease),filter var(--ease);box-shadow:0 8px 32px rgba(201,168,76,.25)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(201,168,76,.38);filter:brightness(1.07)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--cream);font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:16px 28px;border-radius:var(--r);border:1px solid var(--border2);text-decoration:none;transition:border-color var(--ease),color var(--ease),background var(--ease)}
+.btn-ghost:hover{border-color:var(--cream);background:rgba(255,255,255,.04)}
+.h-right{display:flex;flex-direction:column;align-items:flex-end}
+.hstats{display:flex;flex-direction:column;gap:1px;width:100%;max-width:340px}
+.hst{background:rgba(255,255,255,.03);border:1px solid var(--border);padding:22px 28px;display:flex;justify-content:space-between;align-items:center;transition:background var(--ease),border-color var(--ease);position:relative;overflow:hidden}
+.hst::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(var(--gold),var(--gold2));transform:scaleY(0);transform-origin:bottom;transition:transform var(--ease)}
+.hst:hover{background:rgba(201,168,76,.05);border-color:rgba(201,168,76,.2)}
+.hst:hover::before{transform:scaleY(1)}
+.hst-n{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.04em;line-height:1;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hst-l{font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);text-align:right;max-width:140px;line-height:1.4}
+.sc-ind{position:absolute;bottom:36px;left:60px;z-index:3;display:flex;align-items:center;gap:12px}
+.sc-line{width:1px;height:48px;background:rgba(255,255,255,.15);position:relative;overflow:hidden}
+.sc-line::after{content:'';position:absolute;top:-100%;left:0;right:0;height:50%;background:var(--gold);animation:sdrop 2s ease-in-out infinite}
+@keyframes sdrop{0%{top:-100%}100%{top:200%}}
+.sc-txt{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);writing-mode:vertical-rl;transform:rotate(180deg)}
+.ticker{background:var(--gold);overflow:hidden;white-space:nowrap;padding:14px 0}
+.t-track{display:inline-block;animation:tick 28s linear infinite}
+.t-track span{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.18em;color:var(--ink);padding:0 40px}
+.t-track span::after{content:'✦';padding-left:40px;opacity:.4}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+section{padding:120px 60px}
+.ey{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.ey .ln{width:32px;height:1px;background:var(--gold)}
+.ey .tx{font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.ey.red .ln{background:var(--red)}
+.ey.red .tx{color:var(--red)}
+h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,7rem);line-height:.9;letter-spacing:.03em;margin-bottom:20px}
+h2 em{font-family:'DM Serif Display',serif;font-style:italic;color:var(--gold)}
+.sb{font-size:.95rem;font-weight:300;line-height:1.8;color:var(--mid);max-width:500px;margin-bottom:70px}
+#services{background:var(--ink2);padding-bottom:0}
+.svc-hd{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px}
+.svc-hd .sb{margin-bottom:0}
+.svc-ct{font-family:'Bebas Neue',sans-serif;font-size:8rem;line-height:1;color:rgba(201,168,76,.08);text-align:right;user-select:none}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--border)}
+.svc{padding:52px 44px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background var(--ease)}
+.svc:nth-child(even){border-right:none}
+.svc:nth-last-child(-n+2){border-bottom:none}
+.svc:hover{background:rgba(201,168,76,.04)}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.svc:hover::before{transform:scaleX(1)}
+.svc-n{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.18em;color:rgba(201,168,76,.3);margin-bottom:32px;display:block}
+.svc-ico{width:52px;height:52px;border:1px solid var(--border2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:28px;transition:border-color var(--ease),background var(--ease)}
+.svc:hover .svc-ico{border-color:rgba(201,168,76,.35);background:rgba(201,168,76,.07)}
+.svc h3{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--cream);margin-bottom:14px;transition:color var(--ease)}
+.svc:hover h3{color:var(--gold2)}
+.svc p{font-size:.87rem;font-weight:300;line-height:1.75;color:var(--mid)}
+.svc-arr{position:absolute;bottom:28px;right:28px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:.85rem;transform:rotate(-45deg);transition:all var(--ease);opacity:0}
+.svc:hover .svc-arr{opacity:1;border-color:var(--gold);color:var(--gold);transform:rotate(0)}
+#why{background:var(--cream);color:var(--ink)}
+#why h2{color:var(--ink)}
+#why .sb{color:#555}
+.why-lay{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.why-feats{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.wf{background:var(--cream2);padding:36px 30px;transition:background var(--ease)}
+.wf:hover{background:var(--ink)}
+.wf:hover .wft{color:var(--gold)}
+.wf:hover .wfb{color:var(--mid)}
+.wfi{font-size:1.6rem;margin-bottom:20px;display:block;transition:transform var(--ease)}
+.wf:hover .wfi{transform:scale(1.1)}
+.wft{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.06em;color:var(--ink);margin-bottom:10px;transition:color var(--ease)}
+.wfb{font-size:.83rem;font-weight:300;line-height:1.7;color:#666;transition:color var(--ease)}
+.why-pull{font-family:'DM Serif Display',serif;font-size:clamp(1.4rem,2.5vw,2rem);font-style:italic;line-height:1.45;color:var(--ink);margin-bottom:40px;border-left:3px solid var(--gold);padding-left:28px}
+.wlist{display:flex;flex-direction:column}
+.wli{display:flex;align-items:flex-start;gap:20px;padding:22px 0;border-bottom:1px solid rgba(0,0,0,.08);transition:padding-left var(--ease)}
+.wli:hover{padding-left:8px}
+.wld{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+.wli strong{display:block;font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+.wli span{font-size:.82rem;font-weight:300;color:#666;line-height:1.6}
+.cert{margin-top:44px;padding:24px 28px;background:var(--ink);border-radius:var(--r);display:flex;align-items:center;gap:20px}
+.cert-i{font-size:1.8rem}
+.cert-t strong{display:block;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.cert-t span{font-size:.8rem;font-weight:300;color:var(--mid)}
+#ba{background:var(--ink);padding-top:0}
+.ba-intro{padding-top:120px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:60px}
+.ba-intro .sb{margin-bottom:0}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.bac{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--ink3)}
+.bac.bef{background:radial-gradient(ellipse at 30% 70%,#2a2318 0%,#111 80%)}
+.bac.bef::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(92deg,transparent 0px,transparent 68px,rgba(100,90,70,.12) 68px,rgba(100,90,70,.12) 72px)}
+.bac.aft{background:#0a0a0a}
+.bac.aft::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0px,transparent 60px,rgba(201,168,76,.65) 60px,rgba(201,168,76,.65) 65px)}
+.bac.aft::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:var(--red)}
+.ba-tag{position:absolute;top:20px;left:20px;font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;border-radius:1px;z-index:2}
+.bef .ba-tag{background:rgba(255,255,255,.08);color:var(--mid);border:1px solid rgba(255,255,255,.1)}
+.aft .ba-tag{background:var(--gold);color:var(--ink)}
+.ba-cap{position:absolute;bottom:0;left:0;right:0;padding:48px 24px 22px;background:linear-gradient(transparent,rgba(0,0,0,.88));z-index:2}
+.ba-cap h4{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.08em;color:var(--cream);margin-bottom:4px}
+.ba-cap p{font-size:.75rem;font-weight:300;color:var(--mid)}
+.ba-note{text-align:center;font-size:.78rem;font-weight:300;color:var(--dim)}
+.ba-note strong{color:var(--gold)}
+#process{background:var(--ink2);position:relative;overflow:hidden}
+#process::before{content:'PROCESS';position:absolute;bottom:-4rem;right:-2rem;font-family:'Bebas Neue',sans-serif;font-size:20rem;color:rgba(255,255,255,.018);pointer-events:none;user-select:none;white-space:nowrap}
+.proc-hd{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px}
+.proc-hd .sb{margin-bottom:0}
+.proc-tag{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.1rem;color:var(--mid);line-height:1.7}
+.psteps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px}
+.ps{background:var(--ink3);padding:48px 36px;position:relative;transition:background var(--ease)}
+.ps:hover{background:rgba(201,168,76,.05)}
+.ps-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px}
+.ps-num{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.2em;color:rgba(201,168,76,.4)}
+.ps-ico{width:44px;height:44px;border:1px solid var(--border2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:border-color var(--ease),background var(--ease)}
+.ps:hover .ps-ico{border-color:var(--gold);background:var(--goldmid)}
+.ps h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--cream);margin-bottom:14px;transition:color var(--ease)}
+.ps:hover h3{color:var(--gold)}
+.ps p{font-size:.84rem;font-weight:300;line-height:1.75;color:var(--mid)}
+#promise{background:var(--ink)}
+.pr-lay{display:grid;grid-template-columns:1fr 2fr;gap:100px;align-items:start}
+.pr-badge{margin-top:44px;padding:32px 28px;border:1px solid var(--border2);border-radius:var(--r)}
+.pr-badge-icon{font-size:2rem;margin-bottom:12px}
+.pr-badge-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.pr-badge-lbl{font-size:.7rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+.pr-cards{display:flex;flex-direction:column;gap:2px}
+.pc{background:var(--ink2);padding:44px 48px;position:relative;transition:background var(--ease)}
+.pc:hover{background:rgba(201,168,76,.04)}
+.pc-tag{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.pc-body{font-size:.95rem;font-weight:300;line-height:1.8;color:var(--cream2)}
+.pc-glyph{font-family:'DM Serif Display',serif;font-size:5rem;line-height:1;color:rgba(201,168,76,.1);position:absolute;top:20px;right:36px}
+.pc-footer{display:flex;align-items:center;justify-content:space-between;margin-top:28px;flex-wrap:wrap;gap:12px}
+.pc-author{display:flex;align-items:center;gap:14px}
+.pc-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--ink);flex-shrink:0}
+.pc-name{font-size:.85rem;font-weight:600;color:var(--cream);letter-spacing:.04em;margin-bottom:2px}
+.pc-role{font-size:.75rem;font-weight:300;color:var(--mid)}
+.pc-stamp{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:5px 12px;border-radius:2px;white-space:nowrap}
+.pr-list{display:flex;flex-direction:column;gap:12px}
+.pr-li{display:flex;align-items:flex-start;gap:12px}
+.pr-li span:first-child{color:var(--gold);font-size:.85rem;flex-shrink:0;margin-top:2px}
+.pr-li span:last-child{font-size:.87rem;font-weight:300;color:var(--cream2);line-height:1.65}
+#contact{background:var(--cream);color:var(--ink)}
+#contact h2{color:var(--ink)}
+#contact .sb{color:#555}
+.clay{display:grid;grid-template-columns:1fr 1.2fr;gap:100px}
+.cleft{display:flex;flex-direction:column;gap:3px}
+.cic{padding:28px;background:var(--cream2);display:flex;align-items:flex-start;gap:18px;position:relative;overflow:hidden;transition:background var(--ease)}
+.cic::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .4s}
+.cic:hover{background:var(--ink)}
+.cic:hover::before{transform:scaleY(1)}
+.cic:hover .ci-lbl{color:var(--gold)}
+.cic:hover .ci-val{color:var(--cream)}
+.cic:hover .ci-sub{color:var(--mid)}
+.ci-ico{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.ci-lbl{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:4px;transition:color var(--ease)}
+.ci-val{font-size:.97rem;font-weight:500;color:var(--ink);text-decoration:none;transition:color var(--ease);display:block;margin-bottom:2px}
+.ci-sub{font-size:.78rem;font-weight:300;color:#888;transition:color var(--ease)}
+.area-wrap{margin-top:24px;padding:18px 22px;border:1px solid rgba(0,0,0,.1);border-radius:var(--r)}
+.area-wrap h5{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+.atags{display:flex;flex-wrap:wrap;gap:6px}
+.atag{font-size:.75rem;font-weight:400;color:#555;background:rgba(0,0,0,.06);padding:5px 12px;border-radius:20px}
+.cform{display:flex;flex-direction:column;gap:18px}
+.flbl{font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#888;margin-bottom:7px;display:block}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ff{display:flex;flex-direction:column}
+.ff input,.ff select,.ff textarea{background:var(--cream2);border:1px solid rgba(0,0,0,.1);border-radius:var(--r);padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--ink);outline:none;resize:vertical;transition:border-color var(--ease),box-shadow var(--ease)}
+.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.ff input::placeholder,.ff textarea::placeholder{color:#bbb}
+.ff select option{background:var(--cream2)}
+.fbtn{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--ink);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:18px 32px;border-radius:var(--r);border:none;width:100%;transition:background var(--ease),transform var(--ease)}
+.fbtn:hover{background:var(--ink3);transform:translateY(-1px)}
+.fbtn-arr{width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:1rem;transition:transform var(--ease);flex-shrink:0}
+.fbtn:hover .fbtn-arr{transform:translateX(4px)}
+.fok{display:none;text-align:center;padding:20px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:var(--r);font-size:.88rem;font-weight:500;color:var(--gold);font-style:italic}
+#ctas{background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);padding:80px 60px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:60px}
+#ctas h2{color:var(--ink);margin-bottom:10px;font-size:clamp(2.5rem,5vw,5.5rem)}
+#ctas p{font-size:.95rem;font-weight:300;color:rgba(0,0,0,.6)}
+.btn-blk{display:inline-flex;align-items:center;gap:12px;background:var(--ink);color:var(--cream);font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:18px 40px;border-radius:var(--r);text-decoration:none;white-space:nowrap;transition:background var(--ease),transform var(--ease),box-shadow var(--ease);box-shadow:0 8px 28px rgba(0,0,0,.3)}
+.btn-blk:hover{background:#1e1e1e;transform:translateY(-2px)}
+footer{background:var(--ink);border-top:1px solid var(--border2);padding:80px 60px 40px}
+.fgrid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.4fr;gap:60px;margin-bottom:60px}
+.fbrand{display:flex;flex-direction:column;gap:20px}
+.fdesc{font-size:.83rem;font-weight:300;line-height:1.75;color:var(--mid);max-width:260px}
+.fbadge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:8px 16px;border-radius:var(--r);width:fit-content}
+.fcol h5{font-size:.65rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.fcol ul li a{font-size:.84rem;font-weight:300;color:var(--mid);text-decoration:none;display:block;padding:6px 0 6px 16px;position:relative;transition:color var(--ease),padding-left var(--ease)}
+.fcol ul li a::before{content:'→';position:absolute;left:0;top:6px;font-size:.7rem;color:rgba(201,168,76,.4);transition:color var(--ease)}
+.fcol ul li a:hover{color:var(--cream);padding-left:20px}
+.fcol ul li a:hover::before{color:var(--gold)}
+.fcrow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.fcrow .fi{font-size:1rem;color:var(--gold)}
+.fcrow a,.fcrow span{font-size:.83rem;font-weight:300;color:var(--mid);text-decoration:none;transition:color var(--ease)}
+.fcrow a:hover{color:var(--cream)}
+.fbot{display:flex;align-items:center;justify-content:space-between;padding-top:36px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px}
+.fbot p{font-size:.75rem;font-weight:300;color:var(--dim)}
+.r{opacity:1;transform:none}
+@media(max-width:1100px){
+  #hdr{padding:0 36px}
+  section{padding:90px 36px}
+  .h-content{padding:0 36px 10vh}
+  .sc-ind{left:36px}
+  #ctas{padding:70px 36px}
+  footer{padding:70px 36px 36px}
+  .svc-hd,.proc-hd,.ba-intro,.pr-lay,.clay,.why-lay{grid-template-columns:1fr;gap:40px}
+  .h-content{grid-template-columns:1fr}
+  .h-right{align-items:flex-start;margin-top:48px}
+  .psteps{grid-template-columns:1fr 1fr}
+  .fgrid{grid-template-columns:1fr 1fr;gap:44px}
+}
+@media(max-width:860px){
+  nav{display:none}
+  .burger{display:flex}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .svc:nth-child(even){border-right:none}
+  .ba-grid{grid-template-columns:1fr}
+  #ctas{grid-template-columns:1fr}
+  .pc{padding:32px 28px}
+  .why-feats{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  #hdr{padding:0 20px}
+  section{padding:70px 20px}
+  .h-content{padding:0 20px 10vh}
+  .sc-ind{left:20px}
+  h1{font-size:clamp(4rem,18vw,7rem)}
+  .svc-grid{grid-template-columns:1fr}
+  .svc{border-right:none!important}
+  .psteps{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  #ctas{padding:56px 20px}
+  footer{padding:56px 20px 28px}
+  .f2{grid-template-columns:1fr}
+  .hstats{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <a class="logo" href="#hero">
+    <div class="logo-mark"><svg viewBox="0 0 38 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 2L35 8V22C35 31 27 38.5 19 42C11 38.5 3 31 3 22V8L19 2Z" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" stroke-width="1.5" stroke-linejoin="round"/><path d="M19 7L30 12V22C30 28.5 24.5 34 19 37C13.5 34 8 28.5 8 22V12L19 7Z" fill="rgba(201,168,76,0.07)" stroke="rgba(201,168,76,0.35)" stroke-width="1" stroke-linejoin="round"/><text x="19" y="26" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="#c9a84c" letter-spacing="0.5">SM</text></svg></div>
+    <div><div class="logo-name">Safe<span>Mark</span></div><div class="logo-sub">Pavement · Ottawa</div></div>
+  </a>
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#why">About</a>
+    <a href="#process">Process</a>
+    <a href="#promise">Our Promise</a>
+    <a href="#contact" class="hcta">Free Estimate</a>
+  </nav>
+  <button class="burger" id="burg" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mob" id="mob">
+  <a href="#services" onclick="closeMob()">Services</a>
+  <a href="#why" onclick="closeMob()">About</a>
+  <a href="#process" onclick="closeMob()">Process</a>
+  <a href="#promise" onclick="closeMob()">Our Promise</a>
+  <a href="#contact" onclick="closeMob()">Get Free Estimate</a>
+</div>
+<section id="hero">
+  <div class="h-bg"></div>
+  <div class="h-road"><canvas id="rc"></canvas></div>
+  <div class="h-num">01</div>
+  <div class="h-content">
+    <div>
+      <div class="h-eyebrow"><div class="eyln"></div><span class="eytx">Serving Ottawa &amp; NCR</span></div>
+      <h1><span class="sub">Marking Excellence</span><span>Safe</span><span class="acc">Mark</span></h1>
+      <p class="h-desc">A new Ottawa pavement marking company built on doing things right from day one. Crisp lines, compliant markings, and personal service &mdash; backed by a satisfaction guarantee on every job.</p>
+      <div class="h-acts">
+        <a href="#contact" class="btn-gold">Get Free Estimate &rarr;</a>
+        <a href="#services" class="btn-ghost">View Services</a>
+      </div>
+    </div>
+    <div class="h-right">
+      <div class="hstats">
+        <div class="hst r"><div class="hst-n">FREE</div><div class="hst-l">On-Site Estimates</div></div>
+        <div class="hst r"><div class="hst-n">48h</div><div class="hst-l">Avg. Project Turnaround</div></div>
+        <div class="hst r"><div class="hst-n">100%</div><div class="hst-l">Satisfaction Guaranteed</div></div>
+        <div class="hst r"><div class="hst-n" style="font-size:1.5rem;letter-spacing:.06em">LOCAL</div><div class="hst-l">Owner-Operated, Ottawa-Based</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="sc-ind"><div class="sc-line"></div><span class="sc-txt">Scroll</span></div>
+</section>
+<div class="ticker">
+  <div class="t-track">
+    <span>Parking Lot Striping</span><span>Fire Lane Marking</span><span>Handicap Markings</span><span>Crack Filling</span><span>Directional Arrows</span><span>Custom Stencils</span><span>Ottawa &amp; NCR</span><span>Free Estimates</span><span>Parking Lot Striping</span><span>Fire Lane Marking</span><span>Handicap Markings</span><span>Crack Filling</span><span>Directional Arrows</span><span>Custom Stencils</span><span>Ottawa &amp; NCR</span><span>Free Estimates</span>
+  </div>
+</div>
+<section id="services">
+  <div class="svc-hd">
+    <div><div class="ey r"><div class="ln"></div><span class="tx">What We Do</span></div><h2 class="r">Our <em>Services</em></h2></div>
+    <div><p class="sb r">Everything your Ottawa property needs &mdash; from fresh striping to fire lane compliance. Done right, on time, with a guarantee behind every line.</p><div class="svc-ct r">04</div></div>
+  </div>
+  <div class="svc-grid">
+    <div class="svc r"><span class="svc-n">&mdash; 01</span><div class="svc-ico">&#x1F17F;&#xFE0F;</div><h3>Parking Lot Striping</h3><p>Precision-applied traffic-grade paint for new layouts or complete re-striping. Maximize capacity, improve flow, meet municipal standards.</p><div class="svc-arr">&rarr;</div></div>
+    <div class="svc r"><span class="svc-n">&mdash; 02</span><div class="svc-ico">&#x1F692;</div><h3>Fire Lane Marking</h3><p>Code-compliant fire lane delineation in regulatory red and white. Keep emergency routes visible, clear, and fully compliant year-round.</p><div class="svc-arr">&rarr;</div></div>
+    <div class="svc r"><span class="svc-n">&mdash; 03</span><div class="svc-ico">&#x267F;</div><h3>Handicap Parking</h3><p>AODA and ADA-compliant accessible stall markings, ISA symbols, and signage. Protect your property, serve your community.</p><div class="svc-arr">&rarr;</div></div>
+    <div class="svc r"><span class="svc-n">&mdash; 04</span><div class="svc-ico">&#x27A1;&#xFE0F;</div><h3>Directional Arrows &amp; Stencils</h3><p>Traffic flow arrows, stop bars, crosswalks, custom numbering, and branded stencils. Reduce accidents, improve site legibility.</p><div class="svc-arr">&rarr;</div></div>
+  </div>
+</section>
+<section id="why">
+  <div class="why-lay">
+    <div>
+      <div class="ey red r"><div class="ln"></div><span class="tx">Why SafeMark</span></div>
+      <h2 class="r" style="color:var(--ink)">Built on<br><em>Doing It Right</em></h2>
+      <p class="sb r">We launched SafeMark because Ottawa deserves a pavement marking company that actually cares &mdash; about quality, compliance, and treating every client like the first one.</p>
+      <div class="why-feats r">
+        <div class="wf"><span class="wfi">&#x1F3AF;</span><div class="wft">Founder-Led Quality</div><div class="wfb">Every job personally overseen by the owner. You get someone who cares, not a rushed sub-crew.</div></div>
+        <div class="wf"><span class="wfi">&#x26A1;</span><div class="wft">Fast Turnaround</div><div class="wfb">Most projects completed in 24&ndash;48 hours. We work around your schedule, not ours.</div></div>
+        <div class="wf"><span class="wfi">&#x1F6E1;&#xFE0F;</span><div class="wft">Insured &amp; Compliant</div><div class="wfb">Fully insured. Every marking meets Ontario municipal, AODA, and fire code standards.</div></div>
+        <div class="wf"><span class="wfi">&#x1F4AC;</span><div class="wft">Always Reachable</div><div class="wfb">No call centres, no voicemail maze. The owner answers your call &mdash; every time.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="why-pull r">&ldquo;We started SafeMark because Ottawa property owners deserve better &mdash; better lines, better service, and a contractor who actually answers the phone.&rdquo;</div>
+      <div class="wlist r">
+        <div class="wli"><div class="wld"></div><div><strong>Owner-Operated, Every Job</strong><span>When you call SafeMark, you speak directly to the owner. Your project is never handed off.</span></div></div>
+        <div class="wli"><div class="wld"></div><div><strong>High-Quality Durable Materials</strong><span>Premium traffic-grade latex and thermoplastic rated for Ottawa&rsquo;s freeze-thaw cycles. Lines that last seasons, not weeks.</span></div></div>
+        <div class="wli"><div class="wld"></div><div><strong>Transparent, Flat-Rate Pricing</strong><span>Itemized quotes with zero hidden fees. You know exactly what you&rsquo;re paying before we start.</span></div></div>
+        <div class="wli"><div class="wld"></div><div><strong>Serving Ottawa &amp; the NCR</strong><span>Kanata &middot; Barrhaven &middot; Orleans &middot; Nepean &middot; Gatineau &middot; and the entire National Capital Region.</span></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="proc-hd">
+    <div><div class="ey r"><div class="ln"></div><span class="tx">How It Works</span></div><h2 class="r">Four-Step<br><em>Process</em></h2></div>
+    <div>
+      <p class="sb r" style="margin-bottom:16px">From first call to final walkthrough &mdash; a straightforward process built around your schedule and zero guesswork.</p>
+      <p class="proc-tag r">&ldquo;Simple, transparent, and built around your schedule.&rdquo;</p>
+    </div>
+  </div>
+  <div class="psteps">
+    <div class="ps r"><div class="ps-top"><span class="ps-num">STEP 01</span><div class="ps-ico">&#x1F4CB;</div></div><h3>Free Estimate</h3><p>On-site assessment at no charge. We measure your lot, check compliance needs, and deliver a clear itemized quote within 24 hours.</p></div>
+    <div class="ps r"><div class="ps-top"><span class="ps-num">STEP 02</span><div class="ps-ico">&#x1F9F9;</div></div><h3>Site Preparation</h3><p>Surface cleaning, crack filling, and layout planning. Everything is set up perfectly before a single line is drawn.</p></div>
+    <div class="ps r"><div class="ps-top"><span class="ps-num">STEP 03</span><div class="ps-ico">&#x1F58C;&#xFE0F;</div></div><h3>Professional Striping</h3><p>Commercial-grade equipment, premium traffic paint, and owner-overseen execution. Most lots completed in a single day.</p></div>
+    <div class="ps r"><div class="ps-top"><span class="ps-num">STEP 04</span><div class="ps-ico">&#x2705;</div></div><h3>Final Inspection</h3><p>We walk the lot with you, review every line and symbol, and don&rsquo;t leave until you&rsquo;re 100% satisfied. Photos delivered same day.</p></div>
+  </div>
+</section>
+<section id="promise">
+  <div class="pr-lay">
+    <div>
+      <div class="ey r"><div class="ln"></div><span class="tx">Our Commitment</span></div>
+      <h2 class="r">Our <em>Promise</em><br>to You</h2>
+      <p class="sb r" style="margin-bottom:0">We&rsquo;re just getting started &mdash; and that&rsquo;s exactly why we&rsquo;ll work harder than anyone else for your business. Every job is our most important job.</p>
+      <div class="pr-badge r">
+        <div class="pr-badge-icon">&#x1F91D;</div>
+        <div class="pr-badge-num">100%</div>
+        <div class="pr-badge-lbl">Satisfaction Guarantee &mdash; Every Project</div>
+      </div>
+    </div>
+    <div class="pr-cards">
+      <div class="pc r">
+        <div class="pc-glyph">&#x2736;</div>
+        <div class="pc-tag">Our Written Guarantee</div>
+        <p class="pc-body">&ldquo;If you&rsquo;re not completely satisfied with the quality of our work, we&rsquo;ll come back and fix it &mdash; no questions, no charge. That&rsquo;s our commitment to every client, starting with our very first.&rdquo;</p>
+        <div class="pc-footer">
+          <div class="pc-author"><div class="pc-avatar">SM</div><div><div class="pc-name">SafeMark Pavement</div><div class="pc-role">Owner-Operated &middot; Ottawa, ON</div></div></div>
+          <div class="pc-stamp">Written Promise</div>
+        </div>
+      </div>
+
+      <div class="pc r">
+        <div class="pc-glyph" style="font-size:3rem;top:16px;right:24px">&#x1F4CB;</div>
+        <div class="pc-tag">What to Expect on Every Job</div>
+        <div class="pr-list">
+          <div class="pr-li"><span>&rarr;</span><span>A real person &mdash; the owner &mdash; answers every call</span></div>
+          <div class="pr-li"><span>&rarr;</span><span>Free on-site estimate with a clear, itemized written quote</span></div>
+          <div class="pr-li"><span>&rarr;</span><span>Before-and-after photos delivered with every completed job</span></div>
+          <div class="pr-li"><span>&rarr;</span><span>AODA &amp; fire code compliance verified before we leave</span></div>
+          <div class="pr-li"><span>&rarr;</span><span>100% satisfaction guarantee &mdash; we return if anything&rsquo;s off</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="ctas">
+  <div>
+    <h2>Let&rsquo;s Make Your<br><em>First Impression.</em></h2>
+    <p>Free on-site estimate, no obligations, response within 24 hours.</p>
+  </div>
+  <a href="#contact" class="btn-blk">Request Free Estimate &rarr;</a>
+</div>
+<section id="contact">
+  <div class="ey red r"><div class="ln"></div><span class="tx">Get in Touch</span></div>
+  <h2 class="r" style="color:var(--ink)">Request a Free<br><em>Estimate</em></h2>
+  <p class="sb r" style="color:#555">Serving Ottawa and the National Capital Region. You&rsquo;ll always speak directly to the owner.</p>
+  <div class="clay">
+    <div class="cleft">
+      <div class="cic r"><div class="ci-ico">&#x1F4DE;</div><div><div class="ci-lbl">Phone</div><a href="tel:+16478635140" class="ci-val">(647) 863-5140</a><span class="ci-sub">7 Days a Week &middot; 24 Hours</span></div></div>
+      <div class="cic r"><div class="ci-ico">&#x2709;&#xFE0F;</div><div><div class="ci-lbl">Email</div><a href="/cdn-cgi/l/email-protection#a5cccbc3cae5d6c4c3c0c8c4d7ced5c4d3c0c8c0cbd18bc6c4" class="ci-val"><span class="__cf_email__" data-cfemail="c5acaba3aa85b6a4a3a0a8a4b7aeb5a4b3a0a8a0abb1eba6a4">[email&#160;protected]</span></a><span class="ci-sub">Response within 24 business hours</span></div></div>
+      <div class="cic r"><div class="ci-ico">&#x1F4CD;</div><div><div class="ci-lbl">Location</div><span class="ci-val">Ottawa, Ontario, Canada</span><span class="ci-sub">National Capital Region</span></div></div>
+      <div class="cic r"><div class="ci-ico">&#x1F550;</div><div><div class="ci-lbl">Hours</div><span class="ci-val">7 Days a Week, 24 Hours</span><span class="ci-sub">Always Available &mdash; Call Anytime</span></div></div>
+      <div class="area-wrap r">
+        <h5>Service Area</h5>
+        <div class="atags"><span class="atag">Ottawa</span><span class="atag">Gatineau</span><span class="atag">Kanata</span><span class="atag">Barrhaven</span><span class="atag">Orleans</span><span class="atag">Nepean</span><span class="atag">Gloucester</span><span class="atag">Stittsville</span><span class="atag">Manotick</span><span class="atag">Richmond</span></div>
+      </div>
+    </div>
+    <form class="cform r" id="cf" onsubmit="return false">
+      <div class="f2">
+        <div class="ff"><label class="flbl">First Name</label><input type="text" placeholder="John" required/></div>
+        <div class="ff"><label class="flbl">Last Name</label><input type="text" placeholder="Smith" required/></div>
+      </div>
+      <div class="f2">
+        <div class="ff"><label class="flbl">Phone Number</label><input type="tel" placeholder="(613) 555-0000"/></div>
+        <div class="ff"><label class="flbl">Email Address</label><input type="email" placeholder="you@company.com" required/></div>
+      </div>
+      <div class="ff"><label class="flbl">Property Address</label><input type="text" placeholder="123 Main St, Ottawa, ON"/></div>
+      <div class="ff"><label class="flbl">Service Required</label>
+        <select>
+          <option value="">&#x2014; Select a service &#x2014;</option>
+          <option>Parking Lot Striping</option><option>Fire Lane Marking</option><option>Handicap Parking Markings</option>
+          <option>Directional Arrows &amp; Stencils</option><option>Crack Filling</option><option>Full Lot Rehabilitation</option>
+          <option>Multiple Services</option><option>Not Sure &#x2014; Need Advice</option>
+        </select>
+      </div>
+      <div class="ff"><label class="flbl">Project Details</label><textarea rows="4" placeholder="Lot size, number of stalls, current condition, special requirements..."></textarea></div>
+      <button type="button" class="fbtn" onclick="doSubmit()"><span>Send Estimate Request</span><div class="fbtn-arr">&rarr;</div></button>
+      <div class="fok" id="fok">&#x2736; Thank you &mdash; we&rsquo;ll be in touch within 24 hours.</div>
+    </form>
+  </div>
+</section>
+<footer>
+  <div class="fgrid">
+    <div class="fbrand">
+      <a class="logo" href="#hero">
+        <div class="logo-mark"><svg viewBox="0 0 38 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 2L35 8V22C35 31 27 38.5 19 42C11 38.5 3 31 3 22V8L19 2Z" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" stroke-width="1.5" stroke-linejoin="round"/><path d="M19 7L30 12V22C30 28.5 24.5 34 19 37C13.5 34 8 28.5 8 22V12L19 7Z" fill="rgba(201,168,76,0.07)" stroke="rgba(201,168,76,0.35)" stroke-width="1" stroke-linejoin="round"/><text x="19" y="26" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="#c9a84c" letter-spacing="0.5">SM</text></svg></div>
+        <div><div class="logo-name">Safe<span>Mark</span></div><div class="logo-sub">Pavement &middot; Ottawa</div></div>
+      </a>
+      <p class="fdesc">A new Ottawa pavement marking company built on doing things right from day one. Quality, precision, and personal service &mdash; guaranteed on every project.</p>
+      <div class="fbadge">&#x2736; Free Estimates Available</div>
+    </div>
+    <div class="fcol"><h5>Services</h5><ul><li><a href="#services">Parking Lot Striping</a></li><li><a href="#services">Fire Lane Marking</a></li><li><a href="#services">Handicap Parking</a></li><li><a href="#services">Directional Arrows</a></li></ul></div>
+    <div class="fcol"><h5>Company</h5><ul><li><a href="#why">Why SafeMark</a></li><li><a href="#process">Our Process</a></li><li><a href="#promise">Our Promise</a></li><li><a href="#contact">Contact Us</a></li></ul></div>
+    <div class="fcol">
+      <h5>Contact</h5>
+      <div class="fcrow"><span class="fi">&#x1F4DE;</span><a href="tel:+16478635140">(647) 863-5140</a></div>
+      <div class="fcrow"><span class="fi">&#x2709;&#xFE0F;</span><a href="/cdn-cgi/l/email-protection#acc5c2cac3ecdfcdcac9c1cddec7dccddac9c1c9c2d882cfcd"><span class="__cf_email__" data-cfemail="234a4d454c63504245464e425148534255464e464d570d4042">[email&#160;protected]</span></a></div>
+      <div class="fcrow"><span class="fi">&#x1F4CD;</span><span>Ottawa, Ontario, Canada</span></div>
+      <div class="fcrow"><span class="fi">&#x1F550;</span><span>7 Days / 24 Hours</span></div>
+    </div>
+  </div>
+  <div class="fbot"><p>&copy; 2025 SafeMark Pavement. All rights reserved. Ottawa, ON.</p><p>Parking Lot Striping &middot; Fire Lane Marking &middot; AODA Compliance &middot; Ottawa NCR</p></div>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+const hdr=document.getElementById('hdr');
+window.addEventListener('scroll',()=>hdr.classList.toggle('sc',scrollY>40),{passive:true});
+const burg=document.getElementById('burg'),mob=document.getElementById('mob');
+burg.addEventListener('click',()=>mob.classList.toggle('open'));
+function closeMob(){mob.classList.remove('open')}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}});
+});
+
+const cv=document.getElementById('rc');
+function drawRoad(){
+  if(!cv)return;
+  const W=cv.parentElement.offsetWidth,H=cv.parentElement.offsetHeight;
+  cv.width=W;cv.height=H;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  const vx=W/2,vy=H*.38,n=18;
+  for(let i=0;i<n;i++){
+    const t=i/n,x0=vx+(i-n/2)*22*t*t,x1=vx+(i+1-n/2)*22*t*t,y=vy+t*(H-vy),alpha=t*t*.45;
+    if((i+Math.floor(Date.now()/130))%2===0){ctx.fillStyle=`rgba(201,168,76,${alpha})`;ctx.fillRect(x0,y-2,Math.max(0,x1-x0-6),4+t*8)}
+  }
+  const g=ctx.createRadialGradient(vx,vy,0,vx,vy,200);
+  g.addColorStop(0,'rgba(201,168,76,0.055)');g.addColorStop(1,'transparent');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+}
+drawRoad();window.addEventListener('resize',drawRoad);
+(function animRoad(){requestAnimationFrame(animRoad);drawRoad()})();
+function doSubmit(){
+  con
